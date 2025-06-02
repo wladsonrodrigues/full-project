@@ -1,1 +1,3 @@
-# full-project
+# Projeto FullStack
+
+Projeto completo Full-Stack de Loja Virtual utilizando JavaScript, React, Node, Express, JWT, BCrypt, Supabase...
