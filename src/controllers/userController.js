@@ -9,14 +9,14 @@ const registerUser = async (request, response) => {
     const { nome, email, senha} = request.body;
 
     //Cria um hash pra senha informada
-    const passwordHash = await bcrypt.hash(senha, 10);
+    const passwordHashed = await bcrypt.hash(senha, 10);
 
     //Abre a conexão com o supabase
     const { data, error } = await supabase.from("users").insert([
         {
             nome,
             email,
-            senha: passwordHash
+            senha: passwordHashed
         }
     ]);
 
@@ -64,3 +64,54 @@ const authentication = async (request, response) => {
     // Devolve o token gerado
     response.json({token});
 };
+
+// Listar todos os usuários
+const listUsers = async (request, response) => {
+    const { data, error } = await supabase.from("users")
+        .select("id,nome,email");
+
+
+
+    if (error){
+        return response.status(500).json({
+            erro: "Erro", error
+        });
+    };
+
+    // Devolve todos os usuários encontrados
+    response.json(data);
+};
+
+// Atualizar dados de um registro de um usuário.
+const updateUser =  async (request, response) => {
+    const { id } = request.params;
+    const { nome, email } = request.body;
+
+    //Cria um hash pra senha informada
+    const passwordHashed = await bcrypt.hash(senha, 10);
+
+    const dataUpdate = {
+        ...(nome && { nome }),
+        ...(email && { email }),
+        ...(senha && { senha: passwordHashed }),
+    };
+
+    const {error} = await supabase.from("users")
+    .update(dataUpdate)
+    .eq("id", id);
+
+    if (error) {
+        return response.status(500).json({
+            error: "Erro:", error
+        });
+    }
+
+    response.json({
+        mensagem: "Usuário atualizado com sucesso!"
+    });
+}; 
+
+
+// Excluir um registro de um usuário.
+// TO DO - Metodo DELETE
+
