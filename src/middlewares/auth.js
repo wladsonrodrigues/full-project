@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 
+
 export default (request, response, next) => {
     const token = request.headers.authorization;
 
