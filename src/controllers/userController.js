@@ -111,7 +111,24 @@ const updateUser =  async (request, response) => {
     });
 }; 
 
+// Excluir um registro (Usuário)
+const deleteUser = async (request, response) => {
+    const { id } = request.params;
 
-// Excluir um registro de um usuário.
-// TO DO - Metodo DELETE
+    const { error } = await supabase.from("users")
+        .delete()
+        .eq("id", id);
+
+    if (error) {
+        return response.status(500).json({
+            error: "Erro:", error 
+        });
+    }
+
+    response.status(200).json({
+        mensagem: "Usuário excluído com sucesso"
+    });
+};
+
+export default { registerUser, authentication, listUsers, updateUser, deleteUser };
 
