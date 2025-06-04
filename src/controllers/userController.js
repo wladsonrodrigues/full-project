@@ -1,6 +1,5 @@
 import supabase from "../config/supabase.js";
 import bcrypt from "bcrypt";
-import cors from "cors";
 import jwt from "jsonwebtoken";
 
 //Cadastro de Usuário
